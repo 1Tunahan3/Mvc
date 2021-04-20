@@ -1,0 +1,15 @@
+﻿@model MvcW03.Entities.Department
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<form asp-action="Create" method="post">
+   
+    <div class="form-group mx-sm-3 mb-2">
+        <label for="inputPassword2" class="sr-only">Department Name</label>
+        <input type="text" class="form-control" name="name" >
+    </div>
+    <button type="submit" class="btn btn-primary mb-2">Save Department</button>
+</form>

@@ -1,0 +1,15 @@
+﻿@model MvcW03.Entities.Department
+@{
+    ViewData["Title"] = "Delete";
+}
+
+
+
+<form asp-action="Delete" method="post">
+   @Html.Hidden("Id")
+   @Html.Hidden("Name")
+    <div >
+        <label>Department Name :@Model.Name</label>
+    </div>
+    <button type="submit" class="btn btn-danger mb-2">Delete Department</button>
+</form>

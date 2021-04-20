@@ -1,0 +1,30 @@
+﻿@model IEnumerable<MvcW03.Entities.Department>
+<table class="table table-bordered table-dark">
+    <thead>
+    <tr>
+        <th scope="col">#</th>
+        <th scope="col">Department Name</th>
+        <th scope="col">Create</th>
+        <th scope="col">Delete</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var department in Model)
+    {
+        <tr>
+            <td scope="row">@department.Id</td>
+            <td>@department.Name</td>
+            
+            <td scope="row">
+                <a asp-action="Create" class="btn btn-primary btn-sm active" role="button" aria-pressed="true">Add New</a>
+            </td>
+            <td>
+                <a asp-action="Delete" asp-route-id="@department.Id" class="btn btn-danger btn-sm active" role="button" aria-pressed="true">Delete</a>
+            </td>
+
+        </tr>
+    }
+    
+
+    </tbody>
+</table>
