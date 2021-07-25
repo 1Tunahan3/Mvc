@@ -1,9 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Core.Entities.Abstract;
 
 namespace Entities.Concrete
 {
-    public class UserOperationClaim
+    public class UserOperationClaim : IEntity
     {
         [Key]
         public int Id { get; set; }

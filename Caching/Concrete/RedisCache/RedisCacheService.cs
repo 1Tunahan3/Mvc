@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using MvcW03.CacheServices.Abstract;
+using Caching.Abstract;
 
-namespace MvcW03.CacheServices.Concrete
+namespace Caching.Concrete.RedisCache
 {
     public class RedisCacheService:ICacheService
     {

@@ -1,9 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Core.Entities.Abstract;
 
 namespace Entities.Concrete
 {
-    public class Course
+    public class Course:IEntity
     {
         [Key]
         public int Id { get; set; }
@@ -29,5 +31,7 @@ namespace Entities.Concrete
         
         [Required]
         public string Name { get; set; }
+
+        
     }
 }

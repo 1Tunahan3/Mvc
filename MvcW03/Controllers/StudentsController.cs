@@ -1,36 +1,30 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text.Json;
-using System.Threading.Tasks;
-using Business.Abstract;
+﻿using Business.Abstract;
 using DataAccess.Abstract;
 using Entities.Concrete;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
-using MvcW03.CacheServices.Abstract;
-
-using StackExchange.Redis;
+using System;
+using System.Collections.Generic;
+using System.IO;
 
 namespace MvcW03.Controllers
 {
-
+    [Authorize(Roles = "admin")]
     public class StudentsController : Controller
     {
         // private readonly SchoolContext _studentDal;
 
         private readonly IStudentService _studentService;
         private readonly IDepartmentService _departmentService;
-        private ICacheService _cache;
+        
         
 
-        public StudentsController(IStudentDal studentDal, IDepartmentDal departmentDal, ICacheService cache, IStudentService studentService, IDepartmentService departmentService)
+        public StudentsController(IStudentDal studentDal, IDepartmentDal departmentDal,  IStudentService studentService, IDepartmentService departmentService)
         {
-            _cache = cache;
+            
             _studentService = studentService;
             _departmentService = departmentService;
         }
@@ -39,23 +33,12 @@ namespace MvcW03.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            if (_cache.KeyExists("studentList"))
-            {
 
-                var dataFromRedisCache = _cache.Get<List<Student>>("studentList");
-                return View(dataFromRedisCache);
-            }
-
-            else
-            {
-                var studentListFromDb = _studentService.GetList();
+            var studentListFromDb = _studentService.GetList();
                 
-                _cache.Set<List<Student>>("studentList",studentListFromDb);
-               
 
                 return View(studentListFromDb);
-            }
-
+            
 
 
         }
@@ -91,7 +74,7 @@ namespace MvcW03.Controllers
             {
                 _studentService.Add(student);
 
-                _cache.Delete("studentList");
+                
 
                 return RedirectToAction(nameof(Index));
             }
@@ -152,7 +135,7 @@ namespace MvcW03.Controllers
             {
 
                 _studentService.Update(student);
-                _cache.Delete("studentList");
+              
                 return RedirectToAction(nameof(Index));
             }
             ViewData["DepartmentId"] = new SelectList(_departmentService.GetList(), "Id", "Name", student.DepartmentId);
@@ -174,7 +157,6 @@ namespace MvcW03.Controllers
             var student = _studentService.Get(id);
             _studentService.Remove(student);
 
-            _cache.Delete("studentList");
             return RedirectToAction(nameof(Index));
         }
 

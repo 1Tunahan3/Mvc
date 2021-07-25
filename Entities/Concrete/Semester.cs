@@ -1,8 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Core.Entities.Abstract;
 
 namespace Entities.Concrete
 {
-    public class Semester
+    public class Semester : IEntity
     {
         [Key]
         public int Id { get; set; }

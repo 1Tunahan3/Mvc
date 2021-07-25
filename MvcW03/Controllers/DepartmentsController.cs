@@ -1,11 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Business.Abstract;
-using DataAccess.Abstract;
+﻿using Business.Abstract;
 using Entities.Concrete;
+using Microsoft.AspNetCore.Mvc;
 
 namespace MvcW03.Controllers
 {
@@ -20,7 +15,7 @@ namespace MvcW03.Controllers
         private readonly IDepartmentService _departmentService;
 
 
-        public DepartmentsController(IDepartmentDal departmentDal, IDepartmentService departmentService)
+        public DepartmentsController( IDepartmentService departmentService)
         {
             _departmentService = departmentService;
             

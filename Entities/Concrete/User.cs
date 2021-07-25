@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using Core.Entities.Abstract;
 
 namespace Entities.Concrete
 {
-    public class User
+    public class User : IEntity
     {
         [Key]
         public int Id { get; set; }

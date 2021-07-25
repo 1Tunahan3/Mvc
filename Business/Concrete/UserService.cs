@@ -35,7 +35,7 @@ namespace Business.Concrete
 
         public void Remove(User entity)
         {
-            userDal.Remove(entity);
+            userDal.Delete(entity);
         }
 
         public List<User> GetList(Expression<Func<User, bool>> filter = null)

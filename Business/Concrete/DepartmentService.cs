@@ -29,7 +29,7 @@ namespace Business.Concrete
 
         public void Remove(Department entity)
         {
-           _departmentDal.Remove(entity);
+           _departmentDal.Delete(entity);
         }
 
         public void Update(Department entity)

@@ -1,24 +1,13 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Business.Abstract;
-using DataAccess.Abstract;
-using DataAccess.Concrete.EntityFramework.DalLayers;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Mvc.Authorization;
-using MvcW03.CacheServices.Abstract;
-using MvcW03.CacheServices.Concrete;
-
 using MvcW03.MyMiddlewares;
 using MvcW03.Security;
-using Business.Concrete;
+using System;
 
 namespace MvcW03
 {
@@ -35,20 +24,15 @@ namespace MvcW03
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMemoryCache();
-            services.AddSingleton<ICacheService, MemoryCacheService>();
+        
 
             services.AddControllersWithViews(opt =>
             {
                 opt.Filters.Add(new AuthorizeFilter());
             });
 
-            services.AddSingleton<IUserDal, UserDal>();
-            services.AddSingleton<IDepartmentDal, DepartmentDal>();
-              services.AddSingleton<IStudentDal, StudentDal>();
+            
 
-              services.AddSingleton<IStudentService, StudentService>();
-              services.AddSingleton<IUserService, UserService>();
-              services.AddSingleton<IDepartmentService, DepartmentService>();
 
             services.AddSingleton<AuthHelper>();
             services.AddHttpContextAccessor();

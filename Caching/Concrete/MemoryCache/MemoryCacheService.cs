@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Caching.Abstract;
 using Microsoft.Extensions.Caching.Memory;
-using MvcW03.CacheServices.Abstract;
 
-namespace MvcW03.CacheServices.Concrete
+namespace Caching.Concrete.MemoryCache
 {
     public class MemoryCacheService:ICacheService
     {
