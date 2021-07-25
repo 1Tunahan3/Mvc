@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using DataAccess.Abstract;
+using DataAccess.Concrete.EntityFramework.Contexts;
+using Entities.Concrete;
 using Microsoft.EntityFrameworkCore;
-using MvcW03.DataAccess.DbServices.Abstract;
-using MvcW03.DataAccess.EntityFramework;
-using MvcW03.Entities;
 
-namespace MvcW03.DataAccess.DbServices.Concrete
+namespace DataAccess.Concrete.EntityFramework.DalLayers
 {
     public class DepartmentDal:IDepartmentDal
     {

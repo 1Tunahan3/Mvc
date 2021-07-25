@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Threading.Tasks;
 
-namespace MvcW03.DataAccess
+namespace DataAccess.Abstract
 {
   public  interface IDbService<T> where T:class,new()
     {

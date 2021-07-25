@@ -3,9 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using MvcW03.DataAccess.DbServices;
-using MvcW03.DataAccess.DbServices.Abstract;
-using MvcW03.Entities;
+using Business.Abstract;
+using DataAccess.Abstract;
+using Entities.Concrete;
 
 namespace MvcW03.Controllers
 {
@@ -17,16 +17,19 @@ namespace MvcW03.Controllers
         //{
         //    _departmentDal = new DepartmentDal();
         //}
-        private readonly IDepartmentDal _departmentDal;
+        private readonly IDepartmentService _departmentService;
 
-        public DepartmentsController(IDepartmentDal departmentDal)
+
+        public DepartmentsController(IDepartmentDal departmentDal, IDepartmentService departmentService)
         {
-            _departmentDal = departmentDal;
+            _departmentService = departmentService;
+            
         }
 
+        [HttpGet]
         public IActionResult Index()
         {
-            var departmentList = _departmentDal.GetList();
+            var departmentList = _departmentService.GetList();
             return View(departmentList);
         }
 
@@ -41,7 +44,7 @@ namespace MvcW03.Controllers
         [HttpPost]
         public IActionResult Create(Department model)
         {
-            _departmentDal.Add(model);
+            _departmentService.Add(model);
             return RedirectToAction("Index");
         }
 
@@ -49,7 +52,7 @@ namespace MvcW03.Controllers
         [HttpGet]
         public IActionResult Delete(int id)
         {
-            var department = _departmentDal.Get(id);
+            var department = _departmentService.Get(id);
             return View(department);
         }
 
@@ -57,7 +60,7 @@ namespace MvcW03.Controllers
         [HttpPost]
         public IActionResult Delete(Department model)
         {
-            _departmentDal.Remove(model);
+            _departmentService.Remove(model);
             return RedirectToAction("Index");
         }
     }

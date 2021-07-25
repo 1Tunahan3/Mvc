@@ -1,6 +1,7 @@
-﻿using MvcW03.Entities;
+﻿using Entities.Concrete;
 
-namespace MvcW03.DataAccess.DbServices.Abstract
+
+namespace DataAccess.Abstract
 {
    public interface IDepartmentDal:IDbService<Department>
     {

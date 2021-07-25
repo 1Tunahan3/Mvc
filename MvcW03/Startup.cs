@@ -8,10 +8,17 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using MvcW03.DataAccess.DbServices;
-using MvcW03.DataAccess.DbServices.Abstract;
-using MvcW03.DataAccess.DbServices.Concrete;
-using MvcW03.DataAccess.EntityFramework;
+using Business.Abstract;
+using DataAccess.Abstract;
+using DataAccess.Concrete.EntityFramework.DalLayers;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Mvc.Authorization;
+using MvcW03.CacheServices.Abstract;
+using MvcW03.CacheServices.Concrete;
+
+using MvcW03.MyMiddlewares;
+using MvcW03.Security;
+using Business.Concrete;
 
 namespace MvcW03
 {
@@ -28,11 +35,39 @@ namespace MvcW03
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMemoryCache();
+            services.AddSingleton<ICacheService, MemoryCacheService>();
 
-            services.AddControllersWithViews();
+            services.AddControllersWithViews(opt =>
+            {
+                opt.Filters.Add(new AuthorizeFilter());
+            });
+
+            services.AddSingleton<IUserDal, UserDal>();
             services.AddSingleton<IDepartmentDal, DepartmentDal>();
-            services.AddSingleton<IStudentDal, StudentDal>();
+              services.AddSingleton<IStudentDal, StudentDal>();
 
+              services.AddSingleton<IStudentService, StudentService>();
+              services.AddSingleton<IUserService, UserService>();
+              services.AddSingleton<IDepartmentService, DepartmentService>();
+
+            services.AddSingleton<AuthHelper>();
+            services.AddHttpContextAccessor();
+
+
+            var cookieOptions = Configuration.GetSection("CookieAuthOptions").Get<CookieAuthOptions>();
+
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options =>
+            {
+                options.AccessDeniedPath = cookieOptions.AccessDeniedPath;
+                options.LoginPath = cookieOptions.LoginPath;
+                options.LogoutPath = cookieOptions.LogoutPath;
+                options.Cookie.Name = cookieOptions.Name;
+                options.SlidingExpiration = cookieOptions.SlidingExpiration;
+                options.ExpireTimeSpan = TimeSpan.FromSeconds(cookieOptions.Timeout); 
+            });
+
+
+           
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -51,7 +86,18 @@ namespace MvcW03
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
+            app.UseCookiePolicy();
+
+            //   app.UseMiddleware<LogMiddleware>(); KENDÝ MÝDDLEWARE ÝMÝZÝ KULLANMAK ÝÇÝN YOL 1
+
+
+            //   app.UseMyLogMiddleware();      KENDÝ MÝDDLEWARE ÝMÝZÝ KULLANMAK ÝÇÝN YOL 2
+
             app.UseRouting();
+
+            app.UseMyLogMiddleware();
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 

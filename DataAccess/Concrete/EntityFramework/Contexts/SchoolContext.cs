@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Entities.Concrete;
 using Microsoft.EntityFrameworkCore;
-using MvcW03.Entities;
 
-namespace MvcW03.DataAccess.EntityFramework
+namespace DataAccess.Concrete.EntityFramework.Contexts
 {
     public class SchoolContext:DbContext
     {
@@ -13,6 +9,12 @@ namespace MvcW03.DataAccess.EntityFramework
         {
             optionsBuilder.UseSqlServer("Data Source=.; initial catalog=School;  Trusted_Connection=True; ");
         }
+
+        public DbSet<User> Users { get; set; }
+
+        public DbSet<OperationClaim> OperationClaimms { get; set; }
+
+        public DbSet<UserOperationClaim> UserOperationClaims { get; set; }
 
         public DbSet<Course> Courses { get; set; }
 
