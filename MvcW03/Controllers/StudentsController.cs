@@ -13,7 +13,7 @@ using MvcW03.Utilities;
 
 namespace MvcW03.Controllers
 {
-    
+    [Authorize(Roles = "student")]
     public class StudentsController : Controller
     {
         // private readonly SchoolContext _studentDal;

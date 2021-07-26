@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Business.Abstract;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using Microsoft.AspNetCore.Authentication;
@@ -15,15 +16,16 @@ namespace MvcW03.Security
 {
     public class AuthHelper
     {
-        private IUserDal _userDal;
+        private IUserService _userService;
         private IConfiguration _configuration;
         private IHttpContextAccessor _httpContextAccessor;
 
-        public AuthHelper(IUserDal userDal, IConfiguration configuration, IHttpContextAccessor httpContextAccessor)
+        public AuthHelper( IConfiguration configuration, IHttpContextAccessor httpContextAccessor, IUserService userService)
         {
-            _userDal = userDal;
+            
             _configuration = configuration;
             _httpContextAccessor = httpContextAccessor;
+            _userService = userService;
         }
 
         private IEnumerable<Claim> GetClaims(User user)
@@ -33,7 +35,7 @@ namespace MvcW03.Security
             claims.Add(new Claim(ClaimTypes.Email,user.Email));
             claims.Add(new Claim(ClaimTypes.NameIdentifier,$"{user.FirstName} {user.LastName}"));
 
-            var operationClaims = _userDal.GetUserOpeaClaims(user.Id);
+            var operationClaims = _userService.GetUserOpeaClaims(user.Id);
 
             foreach (var claim in operationClaims)
             {
@@ -45,7 +47,7 @@ namespace MvcW03.Security
 
         public async Task<bool> SecureSignIn(string userName, string password)
         {
-            var user = _userDal.GetUserByEmailAndPassword(userName, password);
+            var user = _userService.GetUserByEmailAndPassword(userName, password);
             if (user!=null)
             {
                 var claims = GetClaims(user);

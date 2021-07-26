@@ -17,8 +17,10 @@ namespace MvcW03.Utilities
             var address = "http://localhost:5000";
             _client = new HttpClient()
             {
-                BaseAddress = new Uri(address)
+                BaseAddress = new Uri(address),
+                
             };
+            
         }
 
         public T Read<T>(string controller,string action,string filter)
