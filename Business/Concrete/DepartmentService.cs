@@ -27,14 +27,14 @@ namespace Business.Concrete
             return _departmentDal.Get(id);
         }
 
-        public void Remove(Department entity)
+        public Department Remove(Department entity)
         {
-           _departmentDal.Delete(entity);
+          return _departmentDal.Delete(entity);
         }
 
-        public void Update(Department entity)
+        public Department Update(Department entity)
         {
-            _departmentDal.Update(entity);
+           return _departmentDal.Update(entity);
         }
 
         public List<Department> GetList(Expression<Func<Department, bool>> filter = null)

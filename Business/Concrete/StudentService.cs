@@ -45,16 +45,20 @@ namespace Business.Concrete
             return _studentDal.GetWithDepartment(id);
         }
 
-        public void Remove(Student entity)
+        public Student Remove(Student entity)
         {
+            var studenr= _studentDal.Delete(entity);
             _cacheService.Delete("studentList");
-            _studentDal.Delete(entity);
+            return studenr;
+
         }
 
-        public void Update(Student entity)
-        {
+        public Student Update(Student entity)
+        { 
+            var student=_studentDal.Update(entity);
             _cacheService.Delete("studentList");
-            _studentDal.Update(entity);
+            return student;
+
         }
 
         public List<Student> GetList(Expression<Func<Student, bool>> filter = null)

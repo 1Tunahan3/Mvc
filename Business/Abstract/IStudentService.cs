@@ -12,9 +12,9 @@ namespace Business.Abstract
 
          Student Get(int id);
 
-         void Remove(Student entity);
+         Student Remove(Student entity);
 
-         void Update(Student entity);
+         Student Update(Student entity);
 
          List<Student> GetList(Expression<Func<Student, bool>> filter = null);
 

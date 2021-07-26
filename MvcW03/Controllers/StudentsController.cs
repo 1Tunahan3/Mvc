@@ -9,24 +9,26 @@ using Microsoft.Extensions.Caching.Memory;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using MvcW03.Utilities;
 
 namespace MvcW03.Controllers
 {
-    [Authorize(Roles = "admin")]
+    
     public class StudentsController : Controller
     {
         // private readonly SchoolContext _studentDal;
 
-        private readonly IStudentService _studentService;
-        private readonly IDepartmentService _departmentService;
+        //private readonly IStudentService _studentService;
+        //private readonly IDepartmentService _departmentService;
+        private WebApiHelper _webApiHelper;
         
         
 
-        public StudentsController(IStudentDal studentDal, IDepartmentDal departmentDal,  IStudentService studentService, IDepartmentService departmentService)
+        public StudentsController( WebApiHelper webApiHelper)
         {
             
-            _studentService = studentService;
-            _departmentService = departmentService;
+            
+            _webApiHelper = webApiHelper;
         }
 
         // GET: Students,
@@ -34,8 +36,7 @@ namespace MvcW03.Controllers
         public IActionResult Index()
         {
 
-            var studentListFromDb = _studentService.GetList();
-                
+            var studentListFromDb = _webApiHelper.Read<List<Student>>("Students", "GetList", null);
 
                 return View(studentListFromDb);
             
@@ -47,7 +48,7 @@ namespace MvcW03.Controllers
         public IActionResult Details(int id)
         {
 
-            var student = _studentService.Get(id);
+            var student = _webApiHelper.Read<Student>("Students", "Get", id.ToString());
 
 
             return View(student);
@@ -56,7 +57,9 @@ namespace MvcW03.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            ViewData["DepartmentId"] = new SelectList(_departmentService.GetList(), "Id", "Name");
+            var departments = _webApiHelper.Read<List<Department>>("Departments", "GetList", null);
+
+            ViewData["DepartmentId"] = new SelectList(departments, "Id", "Name");
             return View();
         }
 
@@ -70,16 +73,15 @@ namespace MvcW03.Controllers
 
             student.PhotoPath = UploadPhoto(file);
 
-            if (ModelState.IsValid)
-            {
-                _studentService.Add(student);
-
-                
+            
+                _webApiHelper.Modify<Student>("Students","Add",student);
 
                 return RedirectToAction(nameof(Index));
-            }
-            ViewData["DepartmentId"] = new SelectList(_departmentService.GetList(), "Id", "Name", student.DepartmentId);
-            return View(student);
+
+            //    var departments = _webApiHelper.Read<List<Department>>("Departments", "GetList", null);
+
+            //ViewData["DepartmentId"] = new SelectList(departments, "Id", "Name", student.DepartmentId);
+            
         }
 
         private string UploadPhoto(IFormFile file)
@@ -118,9 +120,13 @@ namespace MvcW03.Controllers
         public IActionResult Edit(int id)
         {
 
-            var student = _studentService.Get(id);
+            var student = _webApiHelper.Read<Student>("Students", "Get", id.ToString());
 
-            ViewData["DepartmentId"] = new SelectList(_departmentService.GetList(), "Id", "Name", student.DepartmentId);
+            var departments = _webApiHelper.Read<List<Department>>("Departments", "GetList", null);
+
+            ViewData["DepartmentId"] = new SelectList(departments, "Id", "Name",student.DepartmentId);
+
+         
             return View(student);
         }
 
@@ -130,22 +136,19 @@ namespace MvcW03.Controllers
         public IActionResult Edit(Student student)
         {
 
+            _webApiHelper.Modify<Student>("Students", "Update", student);
 
-            if (ModelState.IsValid)
-            {
+            //    var departments = _webApiHelper.Read<List<Department>>("Departments", "GetList", null);
 
-                _studentService.Update(student);
-              
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["DepartmentId"] = new SelectList(_departmentService.GetList(), "Id", "Name", student.DepartmentId);
-            return View(student);
+            //ViewData["DepartmentId"] = new SelectList(departments, "Id", "Name", student.DepartmentId);
+
+            return RedirectToAction(nameof(Index));
         }
 
         [HttpGet]
         public IActionResult Delete(int id)
         {
-            var student = _studentService.Get(id);
+            var student = _webApiHelper.Read<Student>("Students", "Get", id.ToString());
             return View(student);
         }
 
@@ -154,15 +157,15 @@ namespace MvcW03.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult DeleteConfirmed(int id)
         {
-            var student = _studentService.Get(id);
-            _studentService.Remove(student);
+            var student = _webApiHelper.Read<Student>("Students", "Get", id.ToString());
+            _webApiHelper.Modify<Student>("Students", "Delete", student);
 
             return RedirectToAction(nameof(Index));
         }
 
         private bool StudentExists(int id)
         {
-            return _studentService.Get(id) != null;
+            return(_webApiHelper.Read<Student>("Students", "Get", id.ToString())) != null;
         }
     }
 

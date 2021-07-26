@@ -11,9 +11,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataAccess", "DataAccess\Da
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Business", "Business\Business.csproj", "{D0EF34A7-9911-4BA8-B3E9-DD5233C1E66B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Caching", "Caching\Caching.csproj", "{10D71D0F-D329-467E-AD04-6008DF43903E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Caching", "Caching\Caching.csproj", "{10D71D0F-D329-467E-AD04-6008DF43903E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "Core\Core.csproj", "{C0913D34-D167-4F43-9069-F7BB234CD622}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core", "Core\Core.csproj", "{C0913D34-D167-4F43-9069-F7BB234CD622}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApi", "WebApi\WebApi.csproj", "{4806CD6F-60D2-4869-BA86-5DFA2704A504}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{C0913D34-D167-4F43-9069-F7BB234CD622}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C0913D34-D167-4F43-9069-F7BB234CD622}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C0913D34-D167-4F43-9069-F7BB234CD622}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4806CD6F-60D2-4869-BA86-5DFA2704A504}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4806CD6F-60D2-4869-BA86-5DFA2704A504}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4806CD6F-60D2-4869-BA86-5DFA2704A504}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4806CD6F-60D2-4869-BA86-5DFA2704A504}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

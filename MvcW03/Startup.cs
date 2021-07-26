@@ -8,6 +8,7 @@ using Microsoft.Extensions.Hosting;
 using MvcW03.MyMiddlewares;
 using MvcW03.Security;
 using System;
+using MvcW03.Utilities;
 
 namespace MvcW03
 {
@@ -24,7 +25,8 @@ namespace MvcW03
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMemoryCache();
-        
+            services.AddHttpContextAccessor();
+
 
             services.AddControllersWithViews(opt =>
             {
@@ -35,7 +37,10 @@ namespace MvcW03
 
 
             services.AddSingleton<AuthHelper>();
-            services.AddHttpContextAccessor();
+
+
+            services.AddSingleton<WebApiHelper>();
+
 
 
             var cookieOptions = Configuration.GetSection("CookieAuthOptions").Get<CookieAuthOptions>();

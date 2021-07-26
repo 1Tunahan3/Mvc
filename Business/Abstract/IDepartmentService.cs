@@ -13,10 +13,10 @@ namespace Business.Abstract
         Department Get(int id);
 
 
-        void Remove(Department entity);
+        Department Remove(Department entity);
 
 
-        void Update(Department entity);
+        Department Update(Department entity);
 
 
         List<Department> GetList(Expression<Func<Department, bool>> filter = null);

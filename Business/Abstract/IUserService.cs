@@ -12,9 +12,9 @@ namespace Business.Abstract
 
       User Add(User entity);
 
-      public void Update(User entity);
+       User Update(User entity);
 
-      public void Remove(User entity);
+      User Remove(User entity);
 
       public List<User> GetList(Expression<Func<User, bool>> filter = null);
 

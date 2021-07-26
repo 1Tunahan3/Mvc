@@ -28,14 +28,14 @@ namespace Business.Concrete
             return userDal.Add(entity);
         }
 
-        public void Update(User entity)
+        public User Update(User entity)
         {
-            userDal.Update(entity);
+           return userDal.Update(entity);
         }
 
-        public void Remove(User entity)
+        public User Remove(User entity)
         {
-            userDal.Delete(entity);
+          return  userDal.Delete(entity);
         }
 
         public List<User> GetList(Expression<Func<User, bool>> filter = null)
